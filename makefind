@@ -1,0 +1,53 @@
+#!/bin/csh
+#
+# cbuild.csh: compile and link find_pulsars program
+#
+# David Barnes, May 2006
+# Based on MXB "makeit" file and s2plot "cbuild.csh" script.
+#
+# $Id: makeit,v 1.4 2006/06/18 01:02:42 dbarnes Exp $
+#
+#
+# usage: cbuild.csh
+
+#g++ -o /nfs/cluster/psr/cvshome/sburke/linux/bin//giant giant.o libsigproc_linux.a -L/usr/local/gnu/x86_64/pgplot -lpgplot -lcpgplot -lg2c -L/usr/X11R6/lib -lX11 -lm
+
+if (!(${?S2PATH})) then
+  echo "S2PATH env. variable not set ... compiling standard find_pulsars."
+g++ -o find_pulsars -I. -I/nfs/cluster/src/local_centos5/gnu/x86_64/pgplot-5.2.2/  find_pulsars.C plot.C dialog.C -L/usr/local/gnu/x86_64/pgplot -lpgplot -lcpgplot /usr/lib64/libg2c.so.0 -L/usr/X11R6/lib -lX11 -lm -lgfortran
+  exit
+endif
+
+set S2FREEGLUT=yes
+set S2SHARED=no
+
+if (! -d $S2PATH || ! -e ${S2PATH}/s2plot.csh) then
+  echo "S2PATH is set but invalid: ${S2PATH} ... please fix and retry."
+  exit(-1);
+endif
+source ${S2PATH}/s2plot.csh
+if ($status) then
+  exit(-1)
+endif
+
+set thisdir=$cwd
+if ($thisdir == $S2PATH) then
+  echo "You must NOT be in directory ${S2PATH} to build your own programs."
+  exit(-1);
+endif
+
+set target=find_pulsars
+
+set source="find_pulsars.C plot.C dialog.C"
+set object="find_pulsars.o plot.o dialog.o"
+
+echo "Compiling source code file ${source} ..."
+g++ -c -O -Wall -D_GNU_SOURCE -I${S2PATH} -DS2PLOT -DS2LINUX  -I/nfs/cluster/psr/packages/linux/pgplot  $source
+
+echo "Linking object file ${target}.o ..."
+g++ -o $target ${object} -L${S2PATH}/${S2KERNEL} -l${libtag}s2plot ${MLLINKS} ${GLLINKS} -L${S2X11PATH}/lib -L${S2XFORMSPATH}/lib -L/usr/local/gnu/x86_64/pgplot -lcpgplot -lpgplot -lforms -lXpm -lX11 -lg2c -lm -lpng -lgfortran ${XLINKPATH}
+
+echo "Cleaning up ..."
+rm -rf $object
+
+echo "Done!"

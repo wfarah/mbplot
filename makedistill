@@ -1,0 +1,35 @@
+#!/bin/csh
+#
+# cbuild.csh: compile and link mbplot program
+#
+# David Barnes, May 2006
+# Based on MXB "makeit" file and s2plot "cbuild.csh" script.
+#
+# $Id: makeit,v 1.4 2006/06/18 01:02:42 dbarnes Exp $
+#
+#
+# usage: cbuild.csh
+
+#setenv S2PLOT 1
+#setenv S2PATH /Users/mbailes/swinburne/s2plot/
+
+if (!(${?S2PATH})) then
+g++ -o distill -I. -I/Users/mbailes/Desktop/Dropbox/Science/soft/pgplot  distill.C plot.C dialog.C -L/Users/mbailes/Desktop/Dropbox/Science/soft/pgplot -lpgplot -lcpgplot -L/usr/X11R6/lib -lX11 -lm -lgfortran
+  exit
+endif
+
+set target=distill
+
+set source="mbplot.C plot.C dialog.C"
+set object="mbplot.o plot.o dialog.o"
+
+echo "Compiling source code file ${source} ..."
+g++ -c -O -I${S2PATH} -I/Users/mbailes/Desktop/Dropbox/Science/soft/pgplot  $source
+
+echo "Linking object file ${target}.o ..."
+g++ -o $target ${object} -L${S2PATH} -ls2plot -L${S2PATH}/darwin-gnu-i386 -L/Users/mbailes/Desktop/Dropbox/Science/soft/pgplot -lcpgplot -lpgplot -L/usr/X11R6/lib -lX11  -lm -lpng -lgfortran 
+
+echo "Cleaning up ..."
+#rm -rf $object
+
+echo "Done!"

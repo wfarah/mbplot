@@ -1,0 +1,33 @@
+
+To compile on your mac or linux do this:
+
+1. Locate your cpgplot.h file and libpgplot and libcpgplot libraries
+2. Edit makeit and change paths to these
+3. Type "makeit"
+4. Place mbplot in a bin directory in your path somewhere.
+
+To use mbplot:
+
+Create a file like the example "cat"
+
+It should consist of N columns by M values. It is not essential
+for all of these values to be valid floating point numbers. They
+can even be names if you like. They must not consist of more than
+one word.
+
+The top of the file is your column labels for plotting.
+
+So a file like:
+
+N  x   y    z    name
+1 1.2  2.3  2.3  FREDDY
+2 8.2  5.6  8.2  JACK
+3 *    8.3  9.2  LEMON
+4 3.4  -2.3  9.0 LAST
+
+Is just fine.
+
+If this file was called "data" just say mbplot data.
+
+Choose your X and y axes, whether to log them or not
+and plot away. 
