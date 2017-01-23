@@ -481,6 +481,7 @@ int main(int argc, char ** argv){
 
 
 	//command_pnt += sprintf(command_pnt,"~wfarah/mbplot_general");
+	command_pnt += sprintf(command_pnt," --cand_file %s",argv[1]);
 	for (int i=0;i<r->nparms;i++){
 		command_pnt += sprintf(command_pnt," --%s %s",
 				r->popdata[i].name,
