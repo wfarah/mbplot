@@ -23,8 +23,9 @@ if !( -e $dir) then
 	cp mbplot_general.cmd ~/.mbplot
 endif
 
-g++ -g -o mbplot -I. -I/home/dada/linux_64/pgplot/  mbplot.C plot.C dialog.C local_medians.C -L/home/dada/linux_64/pgplot/ -lcpgplot -lpgplot -L/usr/X11R6/lib -lX11 -lm -lgfortran -lpng -DCONFIG_DIR=\"$HOME/.mbplot/\"
+#g++ -g -o mbplot -I. -I/home/dada/linux_64/pgplot/  mbplot.C plot.C dialog.C local_medians.C -L/home/dada/linux_64/pgplot/ -lcpgplot -lpgplot -L/usr/X11R6/lib -lX11 -lm -lgfortran -lpng -DCONFIG_DIR=\"$HOME/.mbplot/\"
 
+g++ -g -o mbplot -I. mbplot.C plot.C dialog.C local_medians.C -lcpgplot -lpgplot -lX11 -lm -lgfortran -lpng -DCONFIG_DIR=\"$HOME/.mbplot/\"
 exit
 
 set target=distill
