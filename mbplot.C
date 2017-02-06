@@ -76,6 +76,7 @@ int main(int argc, char ** argv){
   int CHANGECOLOUR = d->addbutton(0.232,0.25,"Colour");
   int SYMBOL       = d->addbutton(0.232,0.3,"Symbol");
   int UNZOOM       = d->addbutton(0.232,0.35,"Unzoom");
+  //int ZAPLASTQ     = d->addbutton(0.232,0.4, "Zaplast(d)");
   int TRIDELETE    = d->addbutton(0.232,0.45,"Tri-delete");
   int DELETE       = d->addbutton(0.232,0.5,"Delete");
   int UNDELETE     = d->addbutton(0.232,0.55,"UnDelete");
@@ -89,7 +90,6 @@ int main(int argc, char ** argv){
   int CMD3LASTQ    = d->addbutton(0.05,0.65,"CMD2 lastQ");
 */
   //int COLLASTQ     = d->addbutton(0.05,0.60,"Col last Q");
-  //int ZAPLASTQ     = d->addbutton(0.05,0.55,"Zap last Q (d)");
   //int COLVERTQ     = d->addbutton(0.05,0.50,"Col vert Q");
   //int ZAPVERTQ     = d->addbutton(0.05,0.45,"Zap vert Q");
 
@@ -349,7 +349,7 @@ int main(int argc, char ** argv){
 	button=-1; plotno=-1; // Plot later in loop
     }
     // Launch Command 1
-    if (plotno==0 && (ans=='c' || (ans=='A' && d->groupon(3)==5))){
+    /*if (plotno==0 && (ans=='c' || (ans=='A' && d->groupon(3)==5))){
         d->plotregions[plotno].reset();
         cpgsci(1);
         float x1,x2,y1,y2;
@@ -383,7 +383,7 @@ int main(int argc, char ** argv){
 	printf("COMMAND:%s:COMMAND\n",command);
 	system(command);
 	button=-1; plotno=-1; // Plot later in loop
-    }
+    }*/
     // Launch Command 2
     if (plotno==0 && (ans=='f' || (ans=='A' && d->groupon(3)==5))){
         d->plotregions[plotno].reset();
@@ -457,7 +457,7 @@ int main(int argc, char ** argv){
 	button=-1; plotno=-1; // Plot later in loop
     }
     // Launch Command 4 (general command)
-    if (plotno==0 && (ans=='d' || (ans=='A' && d->groupon(3)==5))){
+    if (plotno==0 && (ans=='c' || (ans=='A' && d->groupon(3)==5))){
         d->plotregions[plotno].reset();
         cpgsci(1);
         float x1,x2,y1,y2;
@@ -595,7 +595,8 @@ int main(int argc, char ** argv){
       button = PLOT; seek_bounds=1; plotno = -1;
     }
 
-  /*  if (button==ZAPLASTQ || ans=='d') { // zap last queried point
+    //if (button==ZAPLASTQ || ans=='d') { // zap last queried point
+    if (ans=='d') { // zap last queried point
       if (gptno >= 0) {
 	//printf("deleting ptno = %d\n", gptno);
 	r->deleted[gptno]=1;
@@ -605,12 +606,13 @@ int main(int argc, char ** argv){
 	  fflush(stdout);
 	}
 	*/
-/*	button=PLOT; seek_bounds=0; plotno=-1;
+	printf("\n\n...Deleting last query point...\n\n");
+	button=PLOT; seek_bounds=0; plotno=-1;
 	gptno = 0;
       }
     }
 
-    if (button==COLLASTQ) { // Colour last queried point
+    /*if (button==COLLASTQ) { // Colour last queried point
       if (gptno >= 0) {
 	r->ci[id[gptno]] = (r->ci[id[gptno]] % 15) + 1;
 	button=PLOT; seek_bounds=0; plotno=-1;
